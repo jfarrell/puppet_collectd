@@ -1,19 +1,14 @@
-# rabbitmq plugin
-#
 class collectd::plugins::rabbitmq (
-  $modules
+  $modules,
 ) {
   validate_hash($modules)
   Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
   include collectd
 
-  collectd::get_from_github { $title:
-    localfolder => '/opt/collectd-rabbitmq',
-    source      => 'https://github.com/signalfx/collectd-rabbitmq'
-  } ->
-  collectd::plugins::plugin_common { 'rabbitmq':
-    package_name         => 'collectd-python',
-    plugin_file_name     => '10-rabbitmq.conf',
-    plugin_template_name => 'rabbitmq/rabbitmq.conf.erb'
+  collectd::plugin { 'rabbitmq':
+    package_name     => 'collectd-rabbitmq',
+    config_file_name => '10-rabbitmq.conf',
+    config_template  => 'collectd/plugins/rabbitmq/rabbitmq.conf.erb',
+    modules          => $modules,
   }
 }

@@ -1,11 +1,14 @@
-class collectd::plugins::apache ( $instances ) {
-  validate_hash($instances)
+class collectd::plugins::apache (
+  $modules,
+) {
+  validate_hash($modules)
   Exec { path => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ] }
   include collectd
 
-  collectd::plugins::plugin_common { 'apache':
-    package_name         => 'collectd-apache',
-    plugin_file_name     => '10-apache.conf',
-    plugin_template_name => 'apache/10-apache.conf.erb',
+  collectd::plugin { 'apache':
+    package_name     => 'collectd-apache',
+    config_file_name => '10-apache.conf',
+    config_template  => 'collectd/plugins/apache/10-apache.conf.erb',
+    modules          => $modules,
   }
 }

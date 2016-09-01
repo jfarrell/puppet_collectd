@@ -34,7 +34,6 @@ class collectd::params {
           $plugin_config_dir           = '/etc/collectd/managed_config'
           $collectd_config_file        = '/etc/collectd/collectd.conf'
           $filtering_config_file       = '/etc/collectd/filtering_config/filtering.conf'
-          $mysql_socket_file           = '/var/lib/mysqld/mysqld.sock'
         }
         elsif $::osfamily == 'Redhat' {
           $plugin_config_dir_tree     = ['/etc/collectd.d/', '/etc/collectd.d/managed_config', '/etc/collectd.d/filtering_config']
@@ -42,7 +41,6 @@ class collectd::params {
           $plugin_config_dir          = '/etc/collectd.d/managed_config'
           $collectd_config_file       = '/etc/collectd.conf'
           $filtering_config_file      = '/etc/collectd.d/filtering_config/filtering.conf'
-          $mysql_socket_file          = '/var/lib/mysql/mysql.sock'
         }
 
         case $::operatingsystem {

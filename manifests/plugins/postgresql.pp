@@ -1,11 +1,14 @@
-class collectd::plugins::postgresql ( $databases ) {
-  validate_hash($databases)
+class collectd::plugins::postgresql (
+  $modules,
+) {
+  validate_hash($modules)
   Exec { path => [ '/bin/', '/sbin/', '/usr/bin/', '/usr/sbin/' ] }
   include collectd
 
-  collectd::plugins::plugin_common { 'postgresql':
-    package_name         => 'collectd-postgresql',
-    plugin_file_name     => '10-postgresql.conf',
-    plugin_template_name => 'postgresql/10-postgresql.conf.erb',
+  collectd::plugin { 'postgresql':
+    package_name     => 'collectd-postgresql',
+    config_file_name => '10-postgresql.conf',
+    config_template  => 'collectd/plugins/postgresql/10-postgresql.conf.erb',
+    modules          => $modules,
   }
 }
